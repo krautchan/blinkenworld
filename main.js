@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function (){
 			    iconSize.w = scaledImage.width;
 			    iconSize.h = scaledImage.height;
 			};
-                        var iconOffset = new OpenLayers.Pixel(-(iconSize.w/2), -iconSize.h);
+                        var iconOffset = new OpenLayers.Pixel(-(iconSize.w/2), 2 * factor + 2 - iconSize.h);
 
                         var marker = new OpenLayers.Marker(
                             new OpenLayers.LonLat(this.lon, this.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
