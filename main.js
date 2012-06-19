@@ -21,6 +21,7 @@ var map = new OpenLayers.Map(
 var osm = new OpenLayers.Layer.OSM();
 osm.displayInLayerSwitcher = false;
 map.addLayer(osm);
+map.addControl(new OpenLayers.Control.LayerSwitcher());
 
 map.zoomToMaxExtent();
 map.zoomIn();
@@ -28,6 +29,8 @@ map.zoomIn();
 
 document.addEventListener('DOMContentLoaded', function (){
     var markersLayer = new OpenLayers.Layer.Markers('Countryballs');
+    markersLayer.displayInLayerSwitcher = false;
+    var markersLayerMS = new OpenLayers.Layer.Markers('Multisize-Countryballs');
 
     var req = new XMLHttpRequest();
     req.open('GET', 'http://krautchan.net/ajax/geoip/lasthour', true);
@@ -47,6 +50,15 @@ document.addEventListener('DOMContentLoaded', function (){
 
                     iconImage.onload = function(e) {
 			var iconSize = new OpenLayers.Size(this.naturalWidth, this.naturalHeight);
+			var iconOffset = new OpenLayers.Pixel(-(iconSize.w/2), -iconSize.h);
+
+			var marker = new OpenLayers.Marker(
+			    new OpenLayers.LonLat(this.lon, this.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
+			    new OpenLayers.Icon(this.src, iconSize, iconOffset)
+			);
+
+			markersLayer.addMarker(marker);                        
+
 			var factor = Math.ceil(Math.sqrt(this.count));
 			if (factor > 4) {
 			    factor = 4;
@@ -64,20 +76,18 @@ document.addEventListener('DOMContentLoaded', function (){
 			    this.src = scaledImage.toDataURL('image/png');
 			    iconSize.w = scaledImage.width;
 			    iconSize.h = scaledImage.height;
-			};
-                        var iconOffset = new OpenLayers.Pixel(-(iconSize.w/2), 2 * factor + 2 - iconSize.h);
-
-                        var marker = new OpenLayers.Marker(
-                            new OpenLayers.LonLat(this.lon, this.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
-                            new OpenLayers.Icon(this.src, iconSize, iconOffset)
-                        );
-
-                        markersLayer.addMarker(marker);
+			    iconOffset = new OpenLayers.Pixel(-(iconSize.w/2), 2 * factor + 2 - iconSize.h);
+			    marker = new OpenLayers.Marker(
+				new OpenLayers.LonLat(this.lon, this.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
+				new OpenLayers.Icon(this.src, iconSize, iconOffset)
+			    );
+			    markersLayerMS.addMarker(marker);                            
+                        };
                     }
                 }
 
                 map.addLayer(markersLayer);
-                markersLayer.setVisibility(true);
+                map.addLayer(markersLayerMS);
             } else {
                 alert('Could not reach Krautchan /int/ API.');
             }

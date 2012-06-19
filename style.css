@@ -14,3 +14,7 @@ a > img {
     top: 0;
     z-index: 9001;
 }
+
+.olControlLayerSwitcher {
+    top: 200px !important;
+}
