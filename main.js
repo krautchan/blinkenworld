@@ -29,7 +29,9 @@ map.zoomIn();
 
 document.addEventListener('DOMContentLoaded', function (){
     var markersLayer = new OpenLayers.Layer.Markers('Countryballs');
+    var markersLayerBG = new OpenLayers.Layer.Markers('Countryballs Background');
     markersLayer.displayInLayerSwitcher = false;
+    markersLayerBG.displayInLayerSwitcher = false;
     var markersLayerMS = new OpenLayers.Layer.Markers('Multisize-Countryballs');
 
     var req = new XMLHttpRequest();
@@ -55,15 +57,14 @@ document.addEventListener('DOMContentLoaded', function (){
 			var marker = new OpenLayers.Marker(
 			    new OpenLayers.LonLat(this.lon, this.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
 			    new OpenLayers.Icon(this.src, iconSize, iconOffset)
-			);
-
-			markersLayer.addMarker(marker);                        
+			);                        
 
 			var factor = Math.ceil(Math.sqrt(this.count));
 			if (factor > 4) {
 			    factor = 4;
 			};
 			if (factor > 1) {
+			    markersLayerBG.addMarker(marker);			
 			    var canvas = document.createElement('canvas');
 			    canvas.setAttribute('width', this.naturalWidth + 4);
 			    canvas.setAttribute('height',this.naturalHeight + 4);
@@ -82,12 +83,16 @@ document.addEventListener('DOMContentLoaded', function (){
 				new OpenLayers.Icon(this.src, iconSize, iconOffset)
 			    );
 			    markersLayerMS.addMarker(marker);                            
+                        } else {
+			    markersLayer.addMarker(marker);                        
                         };
                     }
                 }
 
-                map.addLayer(markersLayer);
-                map.addLayer(markersLayerMS);
+                map.addLayers([markersLayer, markersLayerMS, markersLayerBG]);
+                markersLayer.setZIndex(9005);
+                markersLayerMS.setZIndex(9004);
+                markersLayerBG.setZIndex(9003);
             } else {
                 alert('Could not reach Krautchan /int/ API.');
             }
