@@ -18,3 +18,7 @@ a > img {
 .olControlLayerSwitcher {
     top: 200px !important;
 }
+
+.olControlAttribution {
+    display: none !important;
+}
