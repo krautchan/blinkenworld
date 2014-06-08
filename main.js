@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function (){
 			    context.drawImage(this, 2, 2);
 			    var scaledImage = hqx(canvas, factor);
 			    key(scaledImage);
+                            this.onload = null;
 			    this.src = scaledImage.toDataURL('image/png');
 			    iconSize.w = scaledImage.width;
 			    iconSize.h = scaledImage.height;
