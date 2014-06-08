@@ -44,10 +44,9 @@ document.addEventListener('DOMContentLoaded', function (){
                 for (i in intData) {
                     var iconImage = new Image();
 
-                    iconImage.crossOrigin = 'Benis';
                     iconImage.lon = intData[i][1];
                     iconImage.lat = intData[i][2];
-                    iconImage.src = 'http://krautchan.net' + intData[i][3];
+                    iconImage.src = intData[i][3];
                     iconImage.count = intData[i][4];
 
                     iconImage.onload = function(e) {
