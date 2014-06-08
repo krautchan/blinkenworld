@@ -5,20 +5,6 @@ html, body, #map {
     width: 100%;
 }
 
-a,
-a > img {
-    border: none;
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 9001;
-}
-
-.olControlLayerSwitcher {
-    top: 200px !important;
-}
-
 .olControlAttribution {
     display: none !important;
 }
