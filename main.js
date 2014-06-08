@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', function (){
     req.onreadystatechange = function(e) {
         if (req.readyState == 4) {
             if(req.status == 200) {
-                intData = JSON.parse(req.responseText)["data"];
+                var intData = JSON.parse(req.responseText)["data"];
 
-                for (i in intData) {
+                for (var i in intData) {
                     var iconImage = new Image();
 
                     iconImage.lon = intData[i][1];
