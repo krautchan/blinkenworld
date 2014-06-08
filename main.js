@@ -15,7 +15,7 @@ function key(canvas) {
 
 var map = new OpenLayers.Map(
     'map',
-    {maxResolution: 0.703125}
+    { }
 );
 
 var osm = new OpenLayers.Layer.OSM();
@@ -24,7 +24,7 @@ map.addLayer(osm);
 map.addControl(new OpenLayers.Control.LayerSwitcher());
 
 map.zoomToMaxExtent();
-map.zoomIn();
+map.moveTo(new OpenLayers.LonLat(0, 4.5e6)); // sorry southern hemisphere
 
 
 document.addEventListener('DOMContentLoaded', function (){
