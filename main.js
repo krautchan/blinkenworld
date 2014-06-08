@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function (){
     var markersLayerMS = new OpenLayers.Layer.Markers('Multisize-Countryballs');
 
     var req = new XMLHttpRequest();
-    req.open('GET', 'http://krautchan.net/ajax/geoip/lasthour', true);
+    req.open('GET', '/ajax/geoip/lasthour', true);
     req.onreadystatechange = function(e) {
         if (req.readyState == 4) {
             if(req.status == 200) {
